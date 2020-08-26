@@ -1,36 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<h1>Order a pizza</h1>
-{% if note %}
-    <h2>{{ note }}</h2>
-{% endif %}
+{% extends 'pizza/base.html' %}
+{% block body %}
+    {% load widget_tweaks %}
+    <div class="container">
+        <h1>Order a pizza</h1>
+        {% if note %}
+            <h2>{{ note }}</h2>
+        {% endif %}
 
-{% if created_pizza_pk %}
-    <a href="{% url 'edit_order' created_pizza_pk %}">Edit your order</a>
-{% endif %}
+        {% if created_pizza_pk %}
+            <a href="{% url 'edit_order' created_pizza_pk %}">Edit your order</a>
+        {% endif %}
 
-<form action="{% url 'order' %}" method="post">
-    {% csrf_token %}
+        <form action="{% url 'order' %}" method="post">
+            {% csrf_token %}
+            {% for field in pizza_form %}
+                <div class="form-group">
+                {{ field.errors }}
+                {{ field.label_tag }}
+                {% render_field field class="form-control" %}
+                </div>
+            {% endfor %}
 
-    {{ pizza_form }}
+            <input type="submit" name="submit" value="Order Pizza">
+        </form>
 
-    <input type="submit" name="submit" value="Order Pizza">
-</form>
+        <br><br>
 
-<br><br>
-
-<form action="{% url 'pizzas' %}" method="get">
-    {{ multi_form }}
-    <input type="submit" value="Get Pizzas">
-</form>
+        <form action="{% url 'pizzas' %}" method="get">
+            {{ multi_form }}
+            <input type="submit" value="Get Pizzas">
+        </form>
 
 
-<a href="{% url 'home' %}">Go Home</a>
-
-</body>
-</html>
+    </div>
+{% endblock %}

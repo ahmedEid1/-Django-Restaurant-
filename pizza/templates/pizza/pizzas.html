@@ -1,26 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Pizzas</title>
-</head>
-<body>
-    <h1>Order Pizza</h1>
-    <h2>{{ note }}</h2>
+{% extends 'pizza/base.html' %}
+{% block body %}
+    {% load widget_tweaks %}
+    <div class="container">
+        <h1>Order Pizza</h1>
+        <h2>{{ note }}</h2>
 
-    <form action="{% url 'pizzas' %}" method="post">
-        {% csrf_token %}
+        <form action="{% url 'pizzas' %}" method="post">
+            {% csrf_token %}
 
-        {{ formset.management_form }}
+            {{ formset.management_form }}
 
-        {% for form in formset %}
-            {{ form }}
-            <br><br>
-        {% endfor %}
+            {% for form in formset %}
+                {% for field in form %}
+                <div class="form-group">
+                {{ field.errors }}
+                {{ field.label_tag }}
+                {% render_field field class="form-control" %}
+                </div>
+            {% endfor %}
+                <br><br>
+            {% endfor %}
 
-        <input type="submit" value="Order Pizzas">
+            <input type="submit" value="Order Pizzas">
 
-    </form>
+        </form>
 
-</body>
-</html>
+    </div>
+    {% endblock %}
