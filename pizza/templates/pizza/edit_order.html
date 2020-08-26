@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <h1>Edit pizza</h1>
+    <h2>{{ note }}</h2>
+
+    <form action="{% url 'edit_order' pizza.id %}" method="post">
+        {% csrf_token %}
+
+        {{ pizza_form }}
+
+
+        <input type="submit" value="Order Pizzas">
+
+    </form>
+
+
+</body>
+</html>
