@@ -13,4 +13,3 @@
     - Styling with CSS
     
     
-# Course Link: `https://www.linkedin.com/learning/django-forms`
